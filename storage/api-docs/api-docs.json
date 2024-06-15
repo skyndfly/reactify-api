@@ -7,12 +7,78 @@
     "paths": {
         "/api/v1/cars": {
             "get": {
+                "tags": [
+                    "Car"
+                ],
                 "summary": "Get all cars by pagination",
                 "operationId": "a157f661d9db556a07bbbb74fab6cfbc",
                 "requestBody": {},
                 "responses": {
                     "200": {
                         "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/v1/cars/{id}": {
+            "get": {
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Get car by id",
+                "operationId": "40fa8582da518e0742986e0a3ee8ab31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the car",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 21
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 21
+                                        },
+                                        "brand": {
+                                            "type": "string",
+                                            "example": "BMW"
+                                        },
+                                        "model": {
+                                            "type": "string",
+                                            "example": "X5"
+                                        },
+                                        "year": {
+                                            "type": "integer",
+                                            "example": 2021
+                                        },
+                                        "color": {
+                                            "type": "string",
+                                            "example": "black"
+                                        },
+                                        "price": {
+                                            "type": "number",
+                                            "example": 12.5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Car not found"
                     }
                 }
             }
