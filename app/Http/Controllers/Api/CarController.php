@@ -7,6 +7,26 @@ use App\Http\Resources\CarCollection;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
 
+/**
+ * @OA\Info(
+ *     title="REACTIFY API",
+ *     version="1.0"
+ * ),
+ * @OA\PathItem(
+ *      path="/api/v1/cars"
+ * )
+ * @OA\Get (
+ *     path="/api/v1/cars",
+ *     summary="Get all cars by pagination",
+ *
+ *     @OA\RequestBody(),
+ *
+ *     @OA\Response(
+ *         response=200,
+ *         description="Ok"
+ *     ),
+ * ),
+ */
 class CarController extends Controller
 {
     public function index()

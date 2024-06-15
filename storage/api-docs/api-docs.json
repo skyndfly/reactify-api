@@ -1,0 +1,21 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "REACTIFY API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/cars": {
+            "get": {
+                "summary": "Get all cars by pagination",
+                "operationId": "a157f661d9db556a07bbbb74fab6cfbc",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    }
+}
