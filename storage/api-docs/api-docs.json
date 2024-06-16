@@ -20,6 +20,48 @@
                 }
             }
         },
+        "/api/v1/brands": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get all brands",
+                "operationId": "30d8fe5998066665c829685568be3664",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/v1/brands/{id}/models": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get all models by brand id",
+                "operationId": "02e37fafa114fc93c956ecca387ae937",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the brand",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
         "/api/v1/cars/{id}": {
             "get": {
                 "tags": [
