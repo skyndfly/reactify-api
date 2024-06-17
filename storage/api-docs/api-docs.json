@@ -89,29 +89,55 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 21
-                                        },
                                         "brand": {
-                                            "type": "string",
-                                            "example": "BMW"
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
                                         },
-                                        "model": {
-                                            "type": "string",
-                                            "example": "X5"
-                                        },
-                                        "year": {
-                                            "type": "integer",
-                                            "example": 2021
-                                        },
-                                        "color": {
-                                            "type": "string",
-                                            "example": "black"
+                                        "car_models": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
                                         },
                                         "price": {
-                                            "type": "number",
-                                            "example": 12.5
+                                            "type": "string",
+                                            "format": "float"
+                                        },
+                                        "availability": {
+                                            "type": "integer"
+                                        },
+                                        "year": {
+                                            "type": "integer"
+                                        },
+                                        "fuel_type": {
+                                            "type": "string"
+                                        },
+                                        "transmission": {
+                                            "type": "string"
+                                        },
+                                        "seats": {
+                                            "type": "integer"
+                                        },
+                                        "color": {
+                                            "type": "string"
+                                        },
+                                        "image": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"

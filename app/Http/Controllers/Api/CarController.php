@@ -7,6 +7,7 @@ use App\Http\Resources\CarCollection;
 use App\Http\Resources\CarResource;
 use App\Models\Car;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Get (
@@ -44,12 +45,23 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  *          response=200,
  *          description="Ok",
  *          @OA\JsonContent(
- *              @OA\Property(property="id", type="integer", example=21),
- *              @OA\Property(property="brand", type="string", example="BMW"),
- *              @OA\Property(property="model", type="string", example="X5"),
- *              @OA\Property(property="year", type="integer", example=2021),
- *              @OA\Property(property="color", type="string", example="black"),
- *              @OA\Property(property="price", type="number", example=12.5),
+ *              @OA\Property(property="brand", type="object",
+ *                  @OA\Property (property="id", type="integer"),
+ *                  @OA\Property (property="name", type="string"),
+ *              ),
+ *               @OA\Property(property="car_models", type="object",
+ *                   @OA\Property (property="id", type="integer"),
+ *                   @OA\Property (property="name", type="string"),
+ *               ),
+ *              @OA\Property(property="price", type="string", format="float"),
+ *              @OA\Property(property="availability", type="integer"),
+ *              @OA\Property(property="year", type="integer"),
+ *              @OA\Property(property="fuel_type", type="string"),
+ *              @OA\Property(property="transmission", type="string"),
+ *              @OA\Property(property="seats", type="integer"),
+ *              @OA\Property(property="color", type="string"),
+ *              @OA\Property(property="image", type="string"),
+ *              @OA\Property(property="description", type="string")
  *      )
  *      ),
  *     @OA\Response(
@@ -74,5 +86,21 @@ class CarController extends Controller
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Car not found'], 404);
         }
+    }
+    public function filter(Request $request): CarCollection
+    {
+        $filters = $request->all();
+
+        $query = Car::query();
+
+        foreach ($filters as $field => $value) {
+            if ($value !== null && $value !== '') {
+                $query->where($field, $value);
+            }
+        }
+
+        $filteredCars = $query->paginate(10);
+
+        return new CarCollection($filteredCars);
     }
 }
