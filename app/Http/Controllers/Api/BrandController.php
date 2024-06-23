@@ -8,48 +8,77 @@ use App\Http\Resources\CarModels\CarModelsCollection;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Get(
- *     path="/api/v1/brands",
- *     summary="Get all brands",
- *     tags={"Brand"},
- *     @OA\RequestBody(
- *
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Ok"
- *     ),
- * ),
- * @OA\Get(
- *      path="/api/v1/brands/{id}/models",
- *      summary="Get all models by brand id",
- *      tags={"Brand"},
- *      @OA\Parameter(
- *          name="id",
- *          in="path",
- *          required=true,
- *          description="ID of the brand",
- *          example=1,
- *          @OA\Schema (
- *              type="integer",
- *              format="int64"
- *          ),
- *      ),
- *      @OA\Response(
- *          response=200,
- *          description="Ok"
- *      ),
- *  ),
- */
+
 class BrandController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/v1/brands",
+     *     summary="Get all brands",
+     *     tags={"Brand"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             @OA\Property (
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property (property="id", type="integer", example=1),
+     *                     @OA\Property (property="name", type="string", example="Hyundai")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     )
+     * ),
+     */
     public function index(): BrandCollection
     {
         return new BrandCollection(Brand::all());
     }
-
-    public function getChildren(int $brandId)
+    /**
+     * @OA\Get(
+     *      path="/api/v1/brands/{id}/models",
+     *      summary="Get all models by brand id",
+     *      tags={"Brand"},
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          description="ID of the brand",
+     *          example=1,
+     *          @OA\Schema (
+     *              type="integer",
+     *              format="int64"
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Ok",
+     *          @OA\JsonContent(
+     *              @OA\Property (
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property (property="id", type="integer", example=1),
+     *                      @OA\Property (property="name", type="string", example="Hyundai")
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request"
+     *      )
+     *  ),
+     */
+    public function brandsChildren(int $brandId): CarModelsCollection
     {
         return new CarModelsCollection(Brand::find($brandId)->models);
 

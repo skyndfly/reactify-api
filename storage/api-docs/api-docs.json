@@ -11,7 +11,7 @@
                     "Car"
                 ],
                 "summary": "Get all cars by pagination",
-                "operationId": "a157f661d9db556a07bbbb74fab6cfbc",
+                "operationId": "e281fb4d4439d19a0326fe1cbd7eaffc",
                 "requestBody": {},
                 "responses": {
                     "200": {
@@ -26,11 +26,38 @@
                     "Brand"
                 ],
                 "summary": "Get all brands",
-                "operationId": "30d8fe5998066665c829685568be3664",
-                "requestBody": {},
+                "operationId": "41ee8c5ca737e71782e6d058a4c4a36f",
                 "responses": {
                     "200": {
-                        "description": "Ok"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Hyundai"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
                     }
                 }
             }
@@ -41,7 +68,7 @@
                     "Brand"
                 ],
                 "summary": "Get all models by brand id",
-                "operationId": "02e37fafa114fc93c956ecca387ae937",
+                "operationId": "8a95da88d6a983e1ae2aed71a8ce85ff",
                 "parameters": [
                     {
                         "name": "id",
@@ -57,7 +84,35 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ok"
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Hyundai"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
                     }
                 }
             }
@@ -68,7 +123,7 @@
                     "Car"
                 ],
                 "summary": "Get car by id",
-                "operationId": "40fa8582da518e0742986e0a3ee8ab31",
+                "operationId": "cee0c4406cfbf35c7b8733e6f65a1825",
                 "parameters": [
                     {
                         "name": "id",
@@ -89,55 +144,76 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "brand": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "brand": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "2"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Volkswagen"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "car_models": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": "5"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Passat"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "format": "float",
+                                                        "example": "709.89"
+                                                    },
+                                                    "availability": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "year": {
+                                                        "type": "integer",
+                                                        "example": "2024"
+                                                    },
+                                                    "fuel_type": {
+                                                        "type": "string",
+                                                        "example": "Electric"
+                                                    },
+                                                    "transmission": {
+                                                        "type": "string",
+                                                        "example": "Manual"
+                                                    },
+                                                    "seats": {
+                                                        "type": "integer",
+                                                        "example": "5"
+                                                    },
+                                                    "color": {
+                                                        "type": "string",
+                                                        "example": "white"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "example": "car1.jpg"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "In et enim laborum. Iste ex suscipit et tenetur et."
+                                                    }
                                                 },
-                                                "name": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "car_models": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer"
-                                                },
-                                                "name": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "price": {
-                                            "type": "string",
-                                            "format": "float"
-                                        },
-                                        "availability": {
-                                            "type": "integer"
-                                        },
-                                        "year": {
-                                            "type": "integer"
-                                        },
-                                        "fuel_type": {
-                                            "type": "string"
-                                        },
-                                        "transmission": {
-                                            "type": "string"
-                                        },
-                                        "seats": {
-                                            "type": "integer"
-                                        },
-                                        "color": {
-                                            "type": "string"
-                                        },
-                                        "image": {
-                                            "type": "string"
-                                        },
-                                        "description": {
-                                            "type": "string"
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"

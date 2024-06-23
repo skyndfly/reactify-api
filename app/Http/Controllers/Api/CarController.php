@@ -9,74 +9,83 @@ use App\Models\Car;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-/**
- * @OA\Get (
- *     path="/api/v1/cars",
- *     summary="Get all cars by pagination",
- *     tags={"Car"},
- *
- *     @OA\RequestBody(
- *
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok"
- *     ),
- * ),
- * @OA\Get (
- *     path="/api/v1/cars/{id}",
- *     summary="Get car by id",
- *     tags={"Car"},
- *
- *     @OA\Parameter(
- *          name="id",
- *          in="path",
- *          required=true,
- *          description="ID of the car",
- *          example=21,
- *          @OA\Schema(
- *              type="integer",
- *              format="int64"
- *          )
- *      ),
- *
- *      @OA\Response(
- *          response=200,
- *          description="Ok",
- *          @OA\JsonContent(
- *              @OA\Property(property="brand", type="object",
- *                  @OA\Property (property="id", type="integer"),
- *                  @OA\Property (property="name", type="string"),
- *              ),
- *               @OA\Property(property="car_models", type="object",
- *                   @OA\Property (property="id", type="integer"),
- *                   @OA\Property (property="name", type="string"),
- *               ),
- *              @OA\Property(property="price", type="string", format="float"),
- *              @OA\Property(property="availability", type="integer"),
- *              @OA\Property(property="year", type="integer"),
- *              @OA\Property(property="fuel_type", type="string"),
- *              @OA\Property(property="transmission", type="string"),
- *              @OA\Property(property="seats", type="integer"),
- *              @OA\Property(property="color", type="string"),
- *              @OA\Property(property="image", type="string"),
- *              @OA\Property(property="description", type="string")
- *      )
- *      ),
- *     @OA\Response(
- *         response=404,
- *         description="Car not found"
- *     )
- * ),
- */
+
 class CarController extends Controller
 {
+    /**
+     * @OA\Get (
+     *     path="/api/v1/cars",
+     *     summary="Get all cars by pagination",
+     *     tags={"Car"},
+     *
+     *     @OA\RequestBody(
+     *
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ok"
+     *     ),
+     * ),
+     */
     public function index()
     {
         return new CarCollection(Car::paginate(6));
     }
-
+    /**
+     * @OA\Get (
+     *     path="/api/v1/cars/{id}",
+     *     summary="Get car by id",
+     *     tags={"Car"},
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          description="ID of the car",
+     *          example=21,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Ok",
+     *          @OA\JsonContent(
+     *                 @OA\Property (
+     *                      property="data",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          type="object",
+     *                          @OA\Property(property="brand", type="object",
+     *                              @OA\Property (property="id", type="integer", example="2"),
+     *                              @OA\Property (property="name", type="string", example="Volkswagen"),
+     *                          ),
+     *                          @OA\Property(property="car_models", type="object",
+     *                              @OA\Property (property="id", type="integer", example="5"),
+     *                              @OA\Property (property="name", type="string", example="Passat"),
+     *                          ),
+     *                          @OA\Property(property="price", type="string", format="float", example="709.89"),
+     *                          @OA\Property(property="availability", type="integer", example="1"),
+     *                          @OA\Property(property="year", type="integer", example="2024"),
+     *                          @OA\Property(property="fuel_type", type="string", example="Electric"),
+     *                          @OA\Property(property="transmission", type="string", example="Manual"),
+     *                          @OA\Property(property="seats", type="integer", example="5"),
+     *                          @OA\Property(property="color", type="string", example="white"),
+     *                          @OA\Property(property="image", type="string", example="car1.jpg"),
+     *                          @OA\Property(property="description", type="string", example="In et enim laborum. Iste ex suscipit et tenetur et.")
+     *                      )
+     *                 )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Car not found"
+     *     )
+     * ),
+     */
     public function show(int $id)
     {
 
@@ -87,6 +96,60 @@ class CarController extends Controller
             return response()->json(['error' => 'Car not found'], 404);
         }
     }
+    /**
+     * @OA\Get (
+     *     path="/api/v1/cars/{id}/filter",
+     *     summary="Get car by id",
+     *     tags={"Car"},
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          description="ID of the car",
+     *          example=21,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Ok",
+     *          @OA\JsonContent(
+     *                 @OA\Property (
+     *                      property="data",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          type="object",
+     *                          @OA\Property(property="brand", type="object",
+     *                              @OA\Property (property="id", type="integer", example="2"),
+     *                              @OA\Property (property="name", type="string", example="Volkswagen"),
+     *                          ),
+     *                          @OA\Property(property="car_models", type="object",
+     *                              @OA\Property (property="id", type="integer", example="5"),
+     *                              @OA\Property (property="name", type="string", example="Passat"),
+     *                          ),
+     *                          @OA\Property(property="price", type="string", format="float", example="709.89"),
+     *                          @OA\Property(property="availability", type="integer", example="1"),
+     *                          @OA\Property(property="year", type="integer", example="2024"),
+     *                          @OA\Property(property="fuel_type", type="string", example="Electric"),
+     *                          @OA\Property(property="transmission", type="string", example="Manual"),
+     *                          @OA\Property(property="seats", type="integer", example="5"),
+     *                          @OA\Property(property="color", type="string", example="white"),
+     *                          @OA\Property(property="image", type="string", example="car1.jpg"),
+     *                          @OA\Property(property="description", type="string", example="In et enim laborum. Iste ex suscipit et tenetur et.")
+     *                      )
+     *                 )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Car not found"
+     *     )
+     * ),
+     */
     public function filter(Request $request): CarCollection
     {
         $filters = $request->all();
