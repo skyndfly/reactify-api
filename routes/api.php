@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\RentalController;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/user', function (Request $request) {
@@ -15,6 +17,10 @@ Route::prefix('/v1')->group(function () {
 
     Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
     Route::get('/brands/{id}/models', [BrandController::class, 'brandsChildren'])->name('brands.children');
+
+    Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+
+    Route::post('rental', [RentalController::class, 'store'])->name('rental.store');
 //    Route::apiResource('/cars', CarController::class);
 //    Route::apiResource('/cars/{id}', CarController::class);
 });
