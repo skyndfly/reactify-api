@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('duration');
             $table->timestamps();
 
             $table->foreign('car_id')->references('id')->on('cars');
