@@ -56,7 +56,7 @@ class AuthController extends Controller
      *             @OA\Property (
      *                 property="message",
      *                 description="Message",
-     *                 example="Успешно зарегистрирован!",
+     *                 example="Succes.",
      *                 type="string"
      *             ),
      *             @OA\Property (
@@ -109,7 +109,7 @@ class AuthController extends Controller
 
             $user = User::create($data);
             $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json(['message' => 'Успешно зарегистрирован!', 'token' => $token], 200);
+            return response()->json(['message' => 'Success.', 'token' => $token], 200);
         } catch (ValidationException $exception) {
             return response()->json(['message' => $exception->errors()], 422);
         }

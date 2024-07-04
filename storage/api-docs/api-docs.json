@@ -74,7 +74,7 @@
                                         "message": {
                                             "description": "Message",
                                             "type": "string",
-                                            "example": "Успешно зарегистрирован!"
+                                            "example": "Succes."
                                         },
                                         "token": {
                                             "description": "Auth token",
@@ -435,6 +435,96 @@
                     },
                     "404": {
                         "description": "Car not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental": {
+            "post": {
+                "tags": [
+                    "Rental"
+                ],
+                "summary": "Add new rental",
+                "operationId": "a2f6b6ea937d30db16dd3704bc3bc8f1",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Bearer token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "car_id",
+                                    "user_id",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "car_id": {
+                                        "description": "Car id",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "user_id": {
+                                        "description": "User id",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "start_date": {
+                                        "description": "Start rental date",
+                                        "type": "string",
+                                        "example": "2024-07-03"
+                                    },
+                                    "end_date": {
+                                        "description": "End rental date",
+                                        "type": "string",
+                                        "example": "2024-07-03"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success."
+                    },
+                    "422": {
+                        "description": "Validate exception",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Errors object",
+                                            "properties": {
+                                                "car_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "Car not found"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
                     }
                 }
             }
