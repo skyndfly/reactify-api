@@ -137,7 +137,7 @@ class RentalController extends Controller
                 Rental::STATUS_ACTIVE,
                 $totalCost,
             );
-            if ($newRental->save()) {
+            if (!$newRental->save()) {
                 $uuid = Uuid::uuid4();
                 $message = "Something went wrong. Error code - {$uuid}";
                 $logMessage = "Class: " . __METHOD__ . " | Line: " . __LINE__ . " | " . $message;
