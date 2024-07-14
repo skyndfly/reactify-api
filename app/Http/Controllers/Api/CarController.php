@@ -12,26 +12,7 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    /**
-     * @OA\Get (
-     *     path="/api/v1/cars",
-     *     summary="Get all cars by pagination",
-     *     tags={"Car"},
-     *
-     *     @OA\RequestBody(
-     *
-     *     ),
-     *
-     *     @OA\Response(
-     *         response=200,
-     *         description="Ok"
-     *     ),
-     * ),
-     */
-    public function index()
-    {
-        return new CarCollection(Car::paginate(6));
-    }
+
     /**
      * @OA\Get (
      *     path="/api/v1/cars/{id}",
@@ -48,8 +29,7 @@ class CarController extends Controller
      *              type="integer",
      *              format="int64"
      *          )
-     *      ),
-     *
+     *      ),     *
      *      @OA\Response(
      *          response=200,
      *          description="Ok",
@@ -96,61 +76,8 @@ class CarController extends Controller
             return response()->json(['error' => 'Car not found'], 404);
         }
     }
-    /**
-     * @OA\Get (
-     *     path="/api/v1/cars/{id}/filter",
-     *     summary="Get car by id",
-     *     tags={"Car"},
-     *
-     *     @OA\Parameter(
-     *          name="id",
-     *          in="path",
-     *          required=true,
-     *          description="ID of the car",
-     *          example=21,
-     *          @OA\Schema(
-     *              type="integer",
-     *              format="int64"
-     *          )
-     *      ),
-     *
-     *      @OA\Response(
-     *          response=200,
-     *          description="Ok",
-     *          @OA\JsonContent(
-     *                 @OA\Property (
-     *                      property="data",
-     *                      type="array",
-     *                      @OA\Items(
-     *                          type="object",
-     *                          @OA\Property(property="brand", type="object",
-     *                              @OA\Property (property="id", type="integer", example="2"),
-     *                              @OA\Property (property="name", type="string", example="Volkswagen"),
-     *                          ),
-     *                          @OA\Property(property="car_models", type="object",
-     *                              @OA\Property (property="id", type="integer", example="5"),
-     *                              @OA\Property (property="name", type="string", example="Passat"),
-     *                          ),
-     *                          @OA\Property(property="price", type="string", format="float", example="709.89"),
-     *                          @OA\Property(property="availability", type="integer", example="1"),
-     *                          @OA\Property(property="year", type="integer", example="2024"),
-     *                          @OA\Property(property="fuel_type", type="string", example="Electric"),
-     *                          @OA\Property(property="transmission", type="string", example="Manual"),
-     *                          @OA\Property(property="seats", type="integer", example="5"),
-     *                          @OA\Property(property="color", type="string", example="white"),
-     *                          @OA\Property(property="image", type="string", example="car1.jpg"),
-     *                          @OA\Property(property="description", type="string", example="In et enim laborum. Iste ex suscipit et tenetur et.")
-     *                      )
-     *                 )
-     *          )
-     *      ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Car not found"
-     *     )
-     * ),
-     */
-    public function filter(Request $request): CarCollection
+    // TODO: add swagger documentation for this method
+    public function index(Request $request): CarCollection
     {
         $filters = $request->all();
 
@@ -162,7 +89,7 @@ class CarController extends Controller
             }
         }
 
-        $filteredCars = $query->paginate(10);
+        $filteredCars = $query->where('availability', 1)->paginate(6);
 
         return new CarCollection($filteredCars);
     }

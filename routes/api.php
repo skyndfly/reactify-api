@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->group(function () {
     Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
-    Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');
     Route::get('/cars/{id}', [CarController::class, 'show'])->name('cars.show');
 
     Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
