@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\Rental\RentalActionStoreContracts;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Rental\RentalIndexRequest;
 use App\Http\Requests\Rental\RentalStoreRequest;
+use App\Http\Resources\Rental\RentalCollection;
+use App\Models\Rental;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Ramsey\Uuid\Nonstandard\Uuid;
 
 class RentalController extends Controller
 {
@@ -92,13 +98,30 @@ class RentalController extends Controller
      */
     public function store(RentalStoreRequest $request, RentalActionStoreContracts $rental): JsonResponse
     {
-
         try {
             $rental($request->validated());
             return response()->json(['message' => 'Success.'], 200);
 
         } catch (ValidationException $exception) {
             return response()->json(['errors' => $exception->errors()], 422);
+        }
+    }
+
+
+    public function index(int $id): JsonResponse|RentalCollection
+    {
+        try {
+            $model = Rental::query()->where('user_id', $id)->paginate(10);
+            if ($model->isEmpty()) {
+                throw new ModelNotFoundException("Model not found");
+            }
+
+            return new RentalCollection($model);
+        } catch (ModelNotFoundException $e) {
+            $uuid = Uuid::uuid4();
+            $logMessage = "Class: " . __METHOD__ . " | Line: " . __LINE__ . " | " . "{$e->getMessage()} -  {$uuid}";
+            Log::error($logMessage);
+            return response()->json(['errors' => $e->getMessage(), 'errorCode' => $uuid], 422);
         }
     }
 }

@@ -18,14 +18,15 @@ Route::prefix('/v1')->group(function () {
     Route::get('/brands/{id}/models', [BrandController::class, 'brandsChildren'])->name('brands.children');
 
     Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
-    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+//    Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
 
-
+    Route::get('rentals/{id}', [RentalController::class, 'index'])->name('rental.index');
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('rental', [RentalController::class, 'store'])->name('rental.store');
+        Route::post('rentals', [RentalController::class, 'store'])->name('rental.store');
     });
+
 //    Route::apiResource('/cars', CarController::class);
 //    Route::apiResource('/cars/{id}', CarController::class);
 });

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Spatie\Ignition\Ignition;
 
 define('LARAVEL_START', microtime(true));
 
@@ -12,6 +13,7 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 // Register the Composer autoloader...
 require __DIR__.'/../vendor/autoload.php';
 
+Ignition::make()->register();
 // Bootstrap Laravel and handle the request...
 (require_once __DIR__.'/../bootstrap/app.php')
     ->handleRequest(Request::capture());

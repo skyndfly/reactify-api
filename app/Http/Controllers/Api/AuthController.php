@@ -114,9 +114,5 @@ class AuthController extends Controller
             return response()->json(['message' => $exception->errors()], 422);
         }
     }
-    public function login(Request $request)
-    {
 
-        return response()->json(['message' => 'Успешно зарегистрирован!'], 200);
-    }
 }
