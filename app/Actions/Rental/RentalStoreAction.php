@@ -3,6 +3,7 @@
 namespace App\Actions\Rental;
 
 use App\Contracts\Rental\RentalActionStoreContracts;
+use App\Jobs\Rental\FinishRentalJob;
 use App\Models\Car;
 use App\Models\Rental;
 use DateTime;
@@ -18,7 +19,7 @@ class RentalStoreAction implements RentalActionStoreContracts
      */
     public function __invoke(array $data): void
     {
-        $car = Car::find($data['car_id']);
+        $car = Car::findById($data['car_id']);
         if (!$car['availability']) {
             $uuid = Uuid::uuid4();
             $message = "The car is not available for rent. Error code - {$uuid}";
@@ -45,6 +46,7 @@ class RentalStoreAction implements RentalActionStoreContracts
         $hours = ($interval->days * 24) + $interval->h + ($interval->i / 60); // Расчет общего времени в часах
         $totalCost = $car['price'] * $hours;
 
+        $car->updateAvailabilityInactive();
         $newRental = Rental::create(
             $data['car_id'],
             $data['user_id'],
@@ -60,6 +62,9 @@ class RentalStoreAction implements RentalActionStoreContracts
             Log::error($logMessage);
             throw ValidationException::withMessages(['rental' => $message]);
         }
+
+
+        FinishRentalJob::dispatch($newRental->id)->delay($endTime); // отложенная задача до конца аренды
     }
 
 }

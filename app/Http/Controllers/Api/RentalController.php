@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Validation\ValidationException;
@@ -102,10 +103,14 @@ class RentalController extends Controller
     public function store(RentalStoreRequest $request, RentalActionStoreContracts $rental): JsonResponse
     {
         try {
+            DB::beginTransaction();
             $rental($request->validated());
+
+            DB::commit();
             return response()->json(['message' => 'Success.'], 200);
 
         } catch (ValidationException $exception) {
+            DB::rollBack();
             return response()->json(['errors' => $exception->errors()], 422);
         }
     }

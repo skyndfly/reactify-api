@@ -45,4 +45,9 @@ class Rental extends Model
 
         return $rental;
     }
+    public function updateStatus (string $status)
+    {
+        $this->status = $status;
+        $this->save();
+    }
 }
