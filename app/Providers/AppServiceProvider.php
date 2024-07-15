@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Actions\Rental\RentalIndexAction;
 use App\Actions\Rental\RentalStoreAction;
+use App\Contracts\Rental\RentalActionIndexContracts;
 use App\Contracts\Rental\RentalActionStoreContracts;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(RentalActionStoreContracts::class, RentalStoreAction::class);
+        $this->app->bind(RentalActionIndexContracts::class, RentalIndexAction::class);
     }
 
     /**
