@@ -7,6 +7,7 @@ use App\Contracts\Rental\RentalActionStoreContracts;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Rental\RentalStoreRequest;
 use App\Http\Resources\Rental\RentalCollection;
+use DomainException;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -109,9 +110,13 @@ class RentalController extends Controller
             DB::commit();
             return response()->json(['message' => 'Success.'], 200);
 
-        } catch (ValidationException $exception) {
+        } catch (DomainException $e) {
             DB::rollBack();
-            return response()->json(['errors' => $exception->errors()], 422);
+            $uuid = Uuid::uuid4();
+            $message = "Something went wrong. Error code - {$uuid}";
+            $logMessage = "Class: " . __METHOD__ . " | Line: " . __LINE__ . " | " . $message;
+            Log::error($logMessage);
+            return response()->json(['errors' => $e->getMessage(), 'errorCode' => $uuid],  422);
         }
     }
 

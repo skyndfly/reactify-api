@@ -22,10 +22,11 @@ Route::prefix('/v1')->group(function () {
 
 
 
-    Route::get('rentals/{id}', [RentalController::class, 'index'])->name('rental.index');
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('rentals', [RentalController::class, 'store'])->name('rental.store');
+        Route::get('rentals/{id}', [RentalController::class, 'index'])->name('rental.index');
     });
+
 
 //    Route::apiResource('/cars', CarController::class);
 //    Route::apiResource('/cars/{id}', CarController::class);

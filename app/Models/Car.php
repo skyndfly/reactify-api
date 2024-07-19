@@ -36,7 +36,7 @@ class Car extends Model
         return $this->belongsTo(Region::class, 'region_id');
     }
 
-    public function updateAvailabilityActive(): void
+    public function setAvailabilityActive(): void
     {
         $this->availability = self::ACTIVE;
         $this->save();
