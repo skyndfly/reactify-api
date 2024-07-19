@@ -33,9 +33,5 @@ class FinishRentalJob implements ShouldQueue
         }
         $model->updateStatus(Rental::STATUS_COMPLETED);
 
-        /** @var Car $car */
-        $car = $model->car();
-        $car->updateAvailabilityActive();
-
     }
 }

@@ -37,8 +37,8 @@ class RentalStoreAction implements RentalActionStoreContracts
         if ($overlappingRentals) {
             throw new \DomainException("The car is already rented for the selected time period.");
         }
-
-        $totalCost = $car['price'] * DateTimeHelper::HoursCalculate( $data['start_date'], $data['end_date']);
+        $interval = DateTimeHelper::HoursCalculate($data['start_date'], $data['end_date']);
+        $totalCost = $car['price'] * $interval;
 
         $newRental = Rental::create(
             $data['car_id'],
@@ -51,7 +51,7 @@ class RentalStoreAction implements RentalActionStoreContracts
         if (!$newRental->save()) {
             throw new \DomainException('Save rental error.');
         }
-        FinishRentalJob::dispatch($newRental->id); // отложенная задача до конца аренды
+        FinishRentalJob::dispatch($newRental->id)->delay($interval*3600); // отложенная задача до конца аренды
     }
 
 }
