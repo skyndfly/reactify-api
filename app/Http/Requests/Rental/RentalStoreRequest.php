@@ -24,8 +24,6 @@ class RentalStoreRequest extends FormRequest
     {
         return [
             'car_id' => 'required|exists:car_models,id',
-            'user_id' => 'required|exists:users,id',
-            'start_date' => 'required|date|after_or_equal:now',
             'end_date' => 'required|date|after:start_date',
         ];
     }

@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\UnauthorizedException;
-use Illuminate\Validation\ValidationException;
 use Ramsey\Uuid\Nonstandard\Uuid;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 
