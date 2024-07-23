@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Rental;
 
 use App\Http\Resources\Brand\BrandResource;
 use App\Http\Resources\CarModels\CarModelsResource;
@@ -9,7 +9,7 @@ use App\Http\Resources\Region\RegionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CarResource extends JsonResource
+class CarForRentalResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,16 +21,6 @@ class CarResource extends JsonResource
         return [
             'brand' => new BrandResource($this->brand),
             'car_models' => new CarModelsResource($this->carModels),
-            'city' => new CitiesResource($this->cities),
-            'region' => new RegionResource($this->region),
-            'price' => $this->price,
-            'year' => $this->year,
-            'fuel_type' => $this->fuel_type,
-            'transmission' => $this->transmission,
-            'seats' => $this->seats,
-            'color' => $this->color,
-            'image' => $this->image,
-            'description' => $this->description,
         ];
     }
 }

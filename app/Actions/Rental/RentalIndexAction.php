@@ -15,7 +15,7 @@ class RentalIndexAction implements RentalActionIndexContracts
      */
     public function __invoke(int $id): RentalCollection
     {
-        $model = Rental::query()->where('user_id', $id)->paginate(10);
+        $model = Rental::query()->where('user_id', $id)->orderBy('end_date', 'DESC')->paginate(10);
         if ($model->isEmpty()) {
             throw new ModelNotFoundException("Not found rentals");
         }

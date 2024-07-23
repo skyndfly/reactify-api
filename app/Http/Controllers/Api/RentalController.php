@@ -98,6 +98,7 @@ class RentalController extends Controller
      *          description="Unauthenticated",
      *      )
      * )
+     * создать аренду
      * @throws Exception
      */
     public function store(RentalStoreRequest $request, RentalActionStoreContracts $rental): JsonResponse
@@ -122,9 +123,10 @@ class RentalController extends Controller
     // TODO: add swagger documentation
 
     /**
+     * Все аренды пользователя
      * @throws Exception
      */
-    public function index(int $id, Request $request, RentalActionIndexContracts $rental): JsonResponse|RentalCollection
+    public function index(Request $request, RentalActionIndexContracts $rental): JsonResponse|RentalCollection
     {
         try {
             $token = $request->header('Authorization');
@@ -132,10 +134,7 @@ class RentalController extends Controller
                 throw new UnauthorizedException("Unauthorized");
             }
             $user = Auth::guard('sanctum')->user();
-            if (!$user || $user->id != $id) {
-                throw new AccessDeniedException("Access denied");
-            }
-            return new RentalCollection($rental($id));
+            return new RentalCollection($rental($user->id));
 
         } catch (ModelNotFoundException $e) {
             $uuid = Uuid::uuid4();
@@ -153,5 +152,14 @@ class RentalController extends Controller
             Log::error($logMessage);
             return response()->json(['errors' => $e->getMessage(), 'errorCode' => $uuid], 403);
         }
+    }
+
+    /**
+     * Просмотр детальной информации об аренде
+     * TODO: добавить комментарий к аренде и возможность добавлять фото
+     */
+    public function show()
+    {
+
     }
 }

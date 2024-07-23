@@ -24,7 +24,7 @@ Route::prefix('/v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('rentals', [RentalController::class, 'store'])->name('rental.store');
-        Route::get('rentals/{id}', [RentalController::class, 'index'])->name('rental.index');
+        Route::get('rentals', [RentalController::class, 'index'])->name('rental.index');
     });
 
 
